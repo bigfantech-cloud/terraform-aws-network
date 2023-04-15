@@ -89,7 +89,7 @@ provider "aws" {
 }
 
 module "network" {
-  source        = "app.terraform.io/bigfantech/network/aws"
+  source        = "bigfantech-cloud/network/aws"
   version       = "1.0.0"
 
   project_name  = "abc"
