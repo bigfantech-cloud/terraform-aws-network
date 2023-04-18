@@ -48,7 +48,7 @@ resource "aws_cloudwatch_log_group" "flow_log" {
 resource "aws_iam_role" "vpc_flow_log_cloudwatch" {
   count = local.create_flow_log_cloudwatch_iam_role ? 1 : 0
 
-  name_prefix = "${module.this.id}-vpc-flow-log-role"
+  name  = "${module.this.id}-VPCFlowLogRole"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "vpc_flow_log_cloudwatch" {
 resource "aws_iam_policy" "vpc_flow_log_cloudwatch" {
   count = local.create_flow_log_cloudwatch_iam_role ? 1 : 0
 
-  name_prefix = "${module.this.id}-vpc-flow-log-to-cloudwatch"
+  name        = "${module.this.id}-VPCFlowLogToCloudwatch"
   policy      = data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0].json
   tags        = module.this.tags
 }
