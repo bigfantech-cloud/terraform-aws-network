@@ -8,6 +8,7 @@ resource "aws_subnet" "private" {
   cidr_block        = each.value
 
   tags = merge(
+    var.additional_private_subnet_tags,
     module.this.tags,
     {
       "Name" = "${module.this.id}-private-${each.key}"
@@ -20,6 +21,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   tags = merge(
+    var.additional_private_subnet_tags,
     module.this.tags,
     {
       "Name" = "${module.this.id}-private"
