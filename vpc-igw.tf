@@ -17,6 +17,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = merge(
+    var.additional_vpc_tags,
     module.this.tags,
     {
       "Name" = "${module.this.id}"
