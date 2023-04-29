@@ -1,14 +1,14 @@
 locals {
-  enable_flow_log                      = var.enable_flow_log
-  create_flow_log_cloudwatch_iam_role  = local.enable_flow_log && var.flow_log_destination_type != "s3" && var.create_flow_log_cloudwatch_iam_role
-  create_flow_log_cloudwatch_log_group = local.enable_flow_log && var.flow_log_destination_type != "s3" && var.create_flow_log_cloudwatch_log_group
+  enable_vpc_flow_log                  = var.enable_vpc_flow_log
+  create_flow_log_cloudwatch_iam_role  = local.enable_vpc_flow_log && var.flow_log_destination_type != "s3" && var.create_flow_log_cloudwatch_iam_role
+  create_flow_log_cloudwatch_log_group = local.enable_vpc_flow_log && var.flow_log_destination_type != "s3" && var.create_flow_log_cloudwatch_log_group
 
   flow_log_destination_arn = local.create_flow_log_cloudwatch_log_group ? try(aws_cloudwatch_log_group.flow_log[0].arn, null) : var.flow_log_destination_arn
   flow_log_iam_role_arn    = var.flow_log_destination_type != "s3" && local.create_flow_log_cloudwatch_iam_role ? try(aws_iam_role.vpc_flow_log_cloudwatch[0].arn, null) : var.flow_log_cloudwatch_iam_role_arn
 }
 
 resource "aws_flow_log" "default" {
-  count = local.enable_flow_log ? 1 : 0
+  count = local.enable_vpc_flow_log ? 1 : 0
 
   vpc_id                   = aws_vpc.main.id
   log_destination_type     = var.flow_log_destination_type
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_log_group" "flow_log" {
 resource "aws_iam_role" "vpc_flow_log_cloudwatch" {
   count = local.create_flow_log_cloudwatch_iam_role ? 1 : 0
 
-  name_prefix = "${module.this.id}-vpc-flow-log-role"
+  name  = "${module.this.id}-VPCFlowLogRole"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "vpc_flow_log_cloudwatch" {
 resource "aws_iam_policy" "vpc_flow_log_cloudwatch" {
   count = local.create_flow_log_cloudwatch_iam_role ? 1 : 0
 
-  name_prefix = "${module.this.id}-vpc-flow-log-to-cloudwatch"
+  name        = "${module.this.id}-VPCFlowLogToCloudwatch"
   policy      = data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0].json
   tags        = module.this.tags
 }

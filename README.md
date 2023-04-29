@@ -24,15 +24,21 @@ Create VPC, Internet Gateway, Subnet, EIP, NAT gateway, Route Table.
 
 - nat_gateway_enabled       Set as "true" to create NAT gateway, and allocated EIP. Default = false.
 
-- enable_flow_log           Whether or not to enable VPC Flow Logs. Default = false.
-
 - dns_hostnames_enabled     Boolean flag to enable/disable DNS hostnames in the VPC. Default = true.
 
 - dns_support_enabled       Boolean flag to enable/disable DNS support in the VPC. Default = true.
 
 - instance_tenancy          Tenancy option for instances launched into the VPC. Default = "default".
 
+- additional_vpc_tags       Map of additional VPC tags.
+
+- additional_public_subnet_tags     Map of additional Public subnet tags.
+
+- additional_private_subnet_tags    Map of additional Private subnet tags.
+
 # VPC FLOW LOG
+
+- enable_vpc_flow_log                     Whether or not to enable VPC Flow Logs. Default = false.
 
 - create_flow_log_cloudwatch_log_group    Whether to create CloudWatch log group for VPC Flow Logs. Default = true.
 
@@ -74,7 +80,7 @@ Create VPC, Internet Gateway, Subnet, EIP, NAT gateway, Route Table.
 - Route Table. [2: public, private]
 - Elastic IP. [1] (created if NAT gateway is enabled)
 - NAT gateway. [1] (created if NAT gateway is enabled)
-- VPC flow log. (created if VPN flow log is enabled)
+- VPC flow log. (created if `enable_vpc_flow_log = true`)
 
 # Steps to create the resources
 

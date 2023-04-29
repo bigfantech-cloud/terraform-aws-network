@@ -28,6 +28,12 @@ variable "dns_support_enabled" {
   default     = true
 }
 
+variable "additional_vpc_tags" {
+  description = "Map of additional VPC tags"
+  type        = map(any)
+  default     = {}
+}
+
 
 #---------
 # SUBNET
@@ -40,10 +46,22 @@ variable "public_subnets_cidr" {
   default = null
 }
 
+variable "additional_public_subnet_tags" {
+  description = "Map of additional Public subnet tags"
+  type        = map(any)
+  default     = {}
+}
+
 variable "private_subnets_cidr" {
   description = "List of private subnet CIDRs. Number of CIDR = Number of private subnets created"
   type        = list(string)
   default     = []
+}
+
+variable "additional_private_subnet_tags" {
+  description = "Map of additional Private subnet tags"
+  type        = map(any)
+  default     = {}
 }
 
 variable "nat_gateway_enabled" {
@@ -55,7 +73,7 @@ variable "nat_gateway_enabled" {
 # VPC FLOW LOG
 #----
 
-variable "enable_flow_log" {
+variable "enable_vpc_flow_log" {
   description = "Whether or not to enable VPC Flow Logs. Default = false"
   type        = bool
   default     = false
