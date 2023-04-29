@@ -7,9 +7,9 @@ Create VPC, Internet Gateway, Subnet, EIP, NAT gateway, Route Table.
 #### REQUIRED:
 
 ```
-- project_name  (ex: project name).
-- environment   (ex: dev/prod).
-- cidr_block    VPC CIDR block (ex:10.0.0.0/16).
+- project_name  (example: project name).
+- environment   (example: dev/prod).
+- cidr_block    VPC CIDR block (example:10.0.0.0/16).
 ```
 
 #### OPTIONAL:

@@ -11,7 +11,7 @@ locals {
   azs_to_public_subnets_cidr_map  = { for k, az in local.availability_zones : az => cidrsubnet(local.public_cidr_block, 3, k) }
   azs_to_private_subnets_cidr_map = { for k, az in local.availability_zones : az => cidrsubnet(local.private_cidr_block, 3, k) }
 
-  custom_azs_to_public_subnets_cidr_map  = var.public_subnets_cidr != null && var.public_subnets_cidr != [] ? { for k, az in local.availability_zones : az => var.public_subnets_cidr[k] } : {}
+  custom_azs_to_public_subnets_cidr_map  = var.public_subnets_cidr != null && length(var.public_subnets_cidr) > 0 ? { for k, az in local.availability_zones : az => var.public_subnets_cidr[k] } : {}
   custom_azs_to_private_subnets_cidr_map = length(var.private_subnets_cidr) > 0 ? { for k, az in local.availability_zones : az => var.private_subnets_cidr[k] } : {}
 
   public_subnets_az_cidr_map  = var.public_subnets_cidr == null ? local.azs_to_public_subnets_cidr_map : local.custom_azs_to_public_subnets_cidr_map
