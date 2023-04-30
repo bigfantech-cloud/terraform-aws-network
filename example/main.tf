@@ -4,7 +4,7 @@ provider "aws" {
 
 module "network" {
   source  = "bigfantech-cloud/network/aws"
-  version = "1.0.0"
+  version = "a.b.c" # find latest version from https://registry.terraform.io/modules/bigfantech-cloud/network/aws/latest
 
   project_name = "abc"
   environment  = "dev"
